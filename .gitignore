@@ -1,0 +1,7 @@
+project_fulljs.code-workspace
+api/node_modules/
+frontend/node_modules/
+api/dist/
+frontend/dist/
+api/.env
+frontend/.env
