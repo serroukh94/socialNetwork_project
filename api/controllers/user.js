@@ -92,9 +92,53 @@ async function loginUser(req, res) {
   }
 }
 
+/**
+ * Met à jour les informations d'un utilisateur spécifié, à l'exception du mot de passe.
+ *
+ * @param {Request} req - L'objet requête, contenant les nouvelles données à mettre à jour et l'ID de l'utilisateur dans les paramètres URL.
+ * @param {Response} res - L'objet réponse, utilisé pour renvoyer les informations de l'utilisateur mis à jour ou un message d'erreur.
+ */
+async function updateUser(req, res) {
+  let userId = req.params.id;
+  let update = { ...req.body };
+  delete update.password;
+
+  if (userId !== req.user.sub) {
+    return res.status(403).send({ message: "Vous n'avez pas la permission de mettre à jour les données de cet utilisateur." });
+  }
+
+  try {
+    const email = update.email ? update.email.toLowerCase() : null;
+    const nick = update.nick ? update.nick.toLowerCase() : null;
+
+    const user = await User.findOne({
+      $or: [
+        { email: email },
+        { nick: nick }
+      ],
+      _id: { $ne: userId }
+    }).exec();
+
+    if (user) {
+      return res.status(409).send({ message: "L'email ou le pseudo est déjà utilisé." });
+    }
+
+    let userUpdated = await User.findByIdAndUpdate(userId, update, { new: true });
+    if (!userUpdated) {
+      return res.status(404).send({ message: "Impossible de mettre à jour l'utilisateur." });
+    }
+    userUpdated.password = undefined;
+    return res.status(200).send({ user: userUpdated });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: "Erreur lors de la requête", error: err });
+  }
+}
+
 module.exports = {
     home,
     saveUser,
-    loginUser
+    loginUser,
+    updateUser
   }
   
