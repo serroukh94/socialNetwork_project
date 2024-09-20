@@ -9,7 +9,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 const app = createApp(App);
 
 axios.defaults.baseURL = 'http://localhost:3800/api';
-app.config.globalProperties.$http = axios;
 
 app.use(router);
 app.use(store);
@@ -20,7 +19,7 @@ axios.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('token');
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `${token}`;
       }
       return config;
     },

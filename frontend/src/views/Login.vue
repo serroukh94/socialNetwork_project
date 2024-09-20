@@ -61,7 +61,7 @@
           const token = response.data.token;
           localStorage.setItem('token', token);
           alert('Connexion réussie !');
-          this.$router.push('/dashboard');
+          this.$router.push('/update-user');
         } catch (error) {
           console.error(error);
           alert("Une erreur s'est produite lors de la connexion.");
