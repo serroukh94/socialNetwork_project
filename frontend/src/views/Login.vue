@@ -2,11 +2,9 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title text-center mb-4">Connexion</h2>
+            <p class="text-center mb-4">CONNEXION</p>
             <form @submit.prevent="login">
-              <div class="form-group mb-3">
+              <div class="form-group mb-4">
                 <label for="email" class="form-label">Email</label>
                 <input
                   type="email"
@@ -17,7 +15,7 @@
                   required
                 />
               </div>
-              <div class="form-group mb-4">
+              <div class="form-group mb-1">
                 <label for="password" class="form-label">Mot de passe</label>
                 <input
                   type="password"
@@ -28,13 +26,14 @@
                   required
                 />
               </div>
+              <div class="mb-4">
+                <i>Pas encore inscrit ? Cliquer <router-link to="/register">ici</router-link> pour le faire</i> 
+              </div>
               <button type="submit" class="btn btn-primary w-100">Se connecter</button>
             </form>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
