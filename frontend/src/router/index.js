@@ -1,44 +1,44 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/Home.vue';
-import Register from '@/views/Register.vue';
-import Login from '@/views/Login.vue';
-import Dashboard from '@/views/Dashboard.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "@/views/Home.vue";
+import Register from "@/views/Register.vue";
+import Login from "@/views/Login.vue";
+import Dashboard from "@/views/Dashboard.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: Home,
   },
   {
-    path: '/register',
-    name: 'Register',
+    path: "/register",
+    name: "Register",
     component: Register,
   },
   {
-    path: '/login',
-    name: 'Login',
+    path: "/login",
+    name: "Login",
     component: Login,
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
+    path: "/dashboard",
+    name: "Dashboard",
     component: Dashboard,
-    meta: { requiresAuth: true }, // Protection de la route
+    meta: { requiresAuth: true }, 
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL || '/'),
+  history: createWebHistory(process.env.BASE_URL || "/"),
   routes,
 });
 
-// Garde de navigation pour les routes protégées
+
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem('token'); // Vérifiez si le token existe
+  const isLoggedIn = localStorage.getItem("token"); 
 
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
-    next('/login');
+    next("/login");
   } else {
     next();
   }
