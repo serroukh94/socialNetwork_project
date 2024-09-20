@@ -92,12 +92,6 @@ async function loginUser(req, res) {
   }
 }
 
-<<<<<<< Updated upstream
-module.exports = {
-    home,
-    saveUser,
-    loginUser
-=======
 
 /**
  * Récupère et renvoie les informations d'un utilisateur spécifique ainsi que les informations de suivi le concernant.
@@ -170,6 +164,5 @@ module.exports = {
     loginUser,
     updateUser,
     getUser
->>>>>>> Stashed changes
   }
   
