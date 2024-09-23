@@ -2,9 +2,9 @@
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title text-center mb-4">Mettre à jour vos informations</h2>
+            <h2 class="card-title text-center mb-4">
+              MISE À JOUR DE VOS INFORMATIONS
+            </h2>
             <form @submit.prevent="updateUser">
               <div class="form-group mb-3">
                 <label for="nick" class="form-label">Pseudo</label>
@@ -28,28 +28,30 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary w-100 mb-3">Mettre à jour</button>
-              <button @click="logout" class="btn btn-danger w-100">Se déconnecter</button>
+              <button type="submit" class="btn btn-primary w-100 mb-3 mt-2">
+                Mettre à jour
+              </button>
+              <button @click="logout" class="btn btn-danger w-100">
+                Se déconnecter
+              </button>
             </form>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import axios from 'axios';
-import { getUserIdFromToken } from '@/utils/auth';
+import axios from "axios";
+import { getUserIdFromToken } from "@/utils/auth";
 
 export default {
-  name: 'UpdateUser',
+  name: "UpdateUser",
   data() {
     return {
       userId: null,
       user: {
-        nick: '',
-        email: '',
+        nick: "",
+        email: "",
       },
     };
   },
@@ -57,7 +59,7 @@ export default {
     this.userId = getUserIdFromToken();
     if (!this.userId) {
       alert("Vous devez être connecté pour accéder à cette page.");
-      this.$router.push('/login');
+      this.$router.push("/login");
     } else {
       try {
         const response = await axios.get(`/user/${this.userId}`);
@@ -65,7 +67,9 @@ export default {
         this.user.email = response.data.user.email;
       } catch (error) {
         console.error(error);
-        alert("Une erreur s'est produite lors de la récupération des informations.");
+        alert(
+          "Une erreur s'est produite lors de la récupération des informations."
+        );
       }
     }
   },
@@ -73,7 +77,7 @@ export default {
     async updateUser() {
       try {
         await axios.put(`/update-user/${this.userId}`, this.user);
-        alert('Vos informations ont été mises à jour avec succès !');
+        alert("Vos informations ont été mises à jour avec succès !");
       } catch (error) {
         console.error(error);
         if (error.response && error.response.status === 409) {
@@ -84,10 +88,9 @@ export default {
       }
     },
     logout() {
-      localStorage.removeItem('token');
-      this.$router.push('/login');
+      localStorage.removeItem("token");
+      this.$router.push("/login");
     },
   },
 };
 </script>
-
