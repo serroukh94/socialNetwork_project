@@ -1,0 +1,33 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: cd frontend && npm install --legacy-peer-deps
+
+    - name: Build frontend
+      run: cd frontend && npm run build
+
+    - name: Test frontend
+      run: cd frontend && npm run test -- --watch=false --browsers=ChromeHeadless

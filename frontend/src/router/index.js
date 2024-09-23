@@ -12,16 +12,16 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL || "/"),
+  history: createWebHistory(process.env.BASE_URL || '/'),
   routes,
 });
 
-
+// Garde de navigation pour les routes protégées
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('token'); 
 
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
-    next("/login");
+    next('/login');
   } else {
     next();
   }
